@@ -15,7 +15,7 @@ namespace Vidly.Controllers
 
         public MoviesController()
         {
-            _context=new ApplicationDbContext();
+            _context = new ApplicationDbContext();
         }
 
         protected override void Dispose(bool disposing)
@@ -26,7 +26,7 @@ namespace Vidly.Controllers
         // GET: Movie
         public ActionResult Index()
         {
-            var movies = _context.Movies.Include(m=>m.Genre).ToList();
+            var movies = _context.Movies.Include(m => m.Genre).ToList();
             return View(movies);
         }
 
@@ -44,5 +44,58 @@ namespace Vidly.Controllers
             }
         }
 
+        public ActionResult New()
+        {
+            var genre = _context.Genres.ToList();
+            var vM = new MovieWithGenreViewModel
+            {
+                Genres = genre
+            };
+            return View("New",vM);
+        }
+
+        [HttpPost]
+        public ActionResult Save(Movie movie)
+        {
+            if (movie.Id == 0)
+            {
+                movie.DateAdded = DateTime.Now;
+                _context.Movies.Add(movie);
+            }
+            else
+            {
+                var movieInDb = _context.Movies.Single(m => m.Id == movie.Id);
+
+                movieInDb.Name = movie.Name;
+                movieInDb.ReleasedDate = movie.ReleasedDate;
+                movieInDb.NumberInStock = movie.NumberInStock;
+                movieInDb.GenreId = movie.GenreId;
+                //movieInDb.DateAdded = DateTime.Now;
+            }
+
+            _context.SaveChanges();
+
+
+            return RedirectToAction("Index", "Movies");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var movie = _context.Movies.SingleOrDefault(m => m.Id == id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                var vM = new MovieWithGenreViewModel
+                {
+                    Movie = movie,
+                    Genres = _context.Genres.ToList()
+                };
+
+                return View("New", vM);
+            }
+        }
     }
 }

@@ -223,6 +223,14 @@
     <Compile Include="Migrations\202011050333485_AddGenre.Designer.cs">
       <DependentUpon>202011050333485_AddGenre.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011051233022_AddRequiredToMovie.cs" />
+    <Compile Include="Migrations\202011051233022_AddRequiredToMovie.Designer.cs">
+      <DependentUpon>202011051233022_AddRequiredToMovie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202011051323084_AddRequiredToMovie1.cs" />
+    <Compile Include="Migrations\202011051323084_AddRequiredToMovie1.Designer.cs">
+      <DependentUpon>202011051323084_AddRequiredToMovie1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Customer.cs" />
@@ -233,6 +241,8 @@
     <Compile Include="Models\Movie.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\MovieWithGenreViewModel.cs" />
+    <Compile Include="ViewModels\NewCustomerViewModel.cs" />
     <Compile Include="ViewModels\RandomCustomerMovieViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +306,8 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Movies\Details.cshtml" />
+    <Content Include="Views\Customer\New.cshtml" />
+    <Content Include="Views\Movies\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -349,6 +361,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011050333485_AddGenre.resx">
       <DependentUpon>202011050333485_AddGenre.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051233022_AddRequiredToMovie.resx">
+      <DependentUpon>202011051233022_AddRequiredToMovie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011051323084_AddRequiredToMovie1.resx">
+      <DependentUpon>202011051323084_AddRequiredToMovie1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

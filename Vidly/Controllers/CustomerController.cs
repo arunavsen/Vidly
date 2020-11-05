@@ -29,7 +29,28 @@ namespace Vidly.Controllers
             return View(customers);
         }
 
-        
+        [HttpPost]
+        public ActionResult Save(NewCustomerViewModel customer)
+        {
+            if (customer.Customers.Id == 0)
+            {
+                _context.Customers.Add(customer.Customers);
+            }
+            else
+            {
+                var customerInDb = _context.Customers.Single(m => m.Id == customer.Customers.Id);
+
+                customerInDb.Name = customer.Customers.Name;
+                customerInDb.Birthdate = customer.Customers.Birthdate;
+                customerInDb.IsSubscribeToNewsletter = customer.Customers.IsSubscribeToNewsletter;
+                customerInDb.MembershipTypeId = customer.Customers.MembershipTypeId;
+            }
+            
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Customer");
+        }
+
         public ActionResult Details(int id)
         {
             var customer = _context.Customers.Include(m=>m.MembershipType).SingleOrDefault(c => c.Id == id);
@@ -42,5 +63,35 @@ namespace Vidly.Controllers
                 return View(customer);
             }
         }
+
+        public ActionResult Edit(int id)
+        {
+            var customer = _context.Customers.SingleOrDefault(m => m.Id == id);
+            if (customer == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                var vM = new NewCustomerViewModel
+                {
+                    Customers = customer,
+                    MembershipTypes = _context.MembershipTypes.ToList()
+                };
+
+                return View("New", vM);
+            }
+        }
+
+        public ActionResult New()
+        {
+            var mT = _context.MembershipTypes.ToList();
+            var vM = new NewCustomerViewModel
+            {
+                MembershipTypes = mT
+            };
+            return View(vM);
+        }
+
     }
 }
