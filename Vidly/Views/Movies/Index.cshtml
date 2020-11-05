@@ -11,13 +11,17 @@
 
         Movies
     </th>
+    <th>Genre</th>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Name</td>
+
+                <td>@Html.ActionLink(item.Name, "Details", "Movies", new { id = item.Id }, null)</td>
+                <td>@item.Genre.Name</td>
             </tr>
+
         }
     </tbody>
 </table>
