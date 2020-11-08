@@ -55,8 +55,18 @@ namespace Vidly.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Movie movie)
         {
+            if (!ModelState.IsValid)
+            {
+                var x = new MovieWithGenreViewModel(movie)
+                {
+                    Genres = _context.Genres.ToList()
+                };
+                return View("New", x);
+            }
+
             if (movie.Id == 0)
             {
                 movie.DateAdded = DateTime.Now;
@@ -88,9 +98,8 @@ namespace Vidly.Controllers
             }
             else
             {
-                var vM = new MovieWithGenreViewModel
+                var vM = new MovieWithGenreViewModel(movie)
                 {
-                    Movie = movie,
                     Genres = _context.Genres.ToList()
                 };
 

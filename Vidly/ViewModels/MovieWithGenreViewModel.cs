@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Microsoft.Owin.Security.Provider;
@@ -9,22 +10,42 @@ namespace Vidly.ViewModels
 {
     public class MovieWithGenreViewModel
     {
-        public IEnumerable<Genre> Genres { get; set; }
-        public Movie Movie { get; set; }
-
-        public string Title
+        public MovieWithGenreViewModel()
         {
-            get
-            {
-                if (Movie != null && Movie.Id !=0)
-                {
-                    return "Edit Movie";
-                }
-                else
-                {
-                    return "New Movie";
-                }
-            }
+            Id = 0;
         }
+
+        public MovieWithGenreViewModel(Movie movie)
+        {
+            Id = movie.Id;
+            Name = movie.Name;
+            GenreId = movie.GenreId;
+            ReleasedDate = movie.ReleasedDate;
+            NumberInStock = movie.NumberInStock;
+        }
+
+        public IEnumerable<Genre> Genres { get; set; }
+
+        public int? Id { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Genre")]
+        public int? GenreId { get; set; }
+
+        [Required]
+        [Display(Name = "Release Date")]
+        public DateTime? ReleasedDate { get; set; }
+
+        [Required]
+        [Display(Name = "Number In Stock")]
+        [Range(1, 20)]
+        public int? NumberInStock { get; set; }
+
+        public string Title => Id !=0 ? "Edit Movie" : "New Movie";
     }
+
 }

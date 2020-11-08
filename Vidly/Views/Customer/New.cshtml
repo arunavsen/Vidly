@@ -5,16 +5,18 @@
 }
 
 <h2>New Customer</h2>
-
+@Html.ValidationSummary(true,"Please fix the following error")
 @using (Html.BeginForm("Save", "Customer"))
 {
     <div class="form-group">
         @Html.LabelFor(a => a.Customers.Name)
         @Html.TextBoxFor(a => a.Customers.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.Customers.Name)
     </div>
     <div class="form-group">
         @Html.LabelFor(a => a.Customers.Birthdate)
         @Html.TextBoxFor(a => a.Customers.Birthdate,"{0:d MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m=>m.Customers.Birthdate)
     </div>
     <div class="checkbox">
         <label>
@@ -29,5 +31,11 @@
             new{@class="form-control"})
     </div>
     @Html.HiddenFor(m=>m.Customers.Id)
+    @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Save</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
 }
