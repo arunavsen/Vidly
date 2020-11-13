@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
-using System.Web.Mvc;
 using AutoMapper;
 using Vidly.Dtos;
 using Vidly.Models;
@@ -44,7 +42,7 @@ namespace Vidly.Controllers.API
         }
 
         // POST /api/customers
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public IHttpActionResult CreateCustomer(CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -61,7 +59,7 @@ namespace Vidly.Controllers.API
         }
 
         // PUT /api/customers/1
-        [System.Web.Http.HttpPut]
+        [HttpPut]
         public IHttpActionResult UpdateCustomer(int id, CustomerDto customerDto)
         {
             if (Equals(!ModelState.IsValid))
@@ -84,7 +82,7 @@ namespace Vidly.Controllers.API
         }
 
         // DELETE /api/customers
-        [System.Web.Http.HttpDelete]
+        [HttpDelete]
         public IHttpActionResult DeleteCustomers(int id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(m => m.Id == id);
